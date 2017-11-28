@@ -70,9 +70,12 @@
 "use strict";
 
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
 
     var btnShow = $("#show");
+    var btnCheck = $("#check");
+    var info = $("#info");
+    var coordinates = $("#coordinates");
 
     var latit = 50.25841;
     var long = 19.02754;
@@ -81,28 +84,80 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var apiUrlCoords = "https://api.openweathermap.org/data/2.5/weather?lat=" + latit + "&lon=" + long + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
 
-    function getCityImage() {
+    //========IMAGE OF A CITY========
+    var getCityImage = function getCityImage() {
         var cityName = $("#cityName").val();
         var imageUrl = "https://pixabay.com/api/?key=7194261-cb5353e414e4d782b7a39e798&q=" + cityName + "&image_type=photo";
 
         $.ajax({
             url: imageUrl
         }).done(function (response) {
-            console.log(response);
-            console.log(cityName);
             randomImage(response);
         }).fail(function (error) {
             console.log("Sorry but we don't have your city in our database");
         });
-    }
+    };
 
-    function randomImage(response) {
-
+    var randomImage = function randomImage(response) {
         $("#cityImage").html("<img src=" + response.hits[Math.floor(Math.random() * response.hits.length)].webformatURL + "/>");
         $("#cityName").val('');
-    }
+    };
 
     btnShow.on('click', getCityImage);
+
+    var getLocation = function getLocation() {
+        var geo = navigator.geolocation;
+        var info = $("#info");
+        if (geo) {
+            info.html = "Please wait a moment";
+            btnCheck.disabled = true;
+            console.log('Pobieranie lokalizacji');
+            geo.getCurrentPosition(showPosition);
+        } else {
+            coordinates.html = "Geolocation isn't supported by your browser.";
+        }
+    };
+
+    var showPosition = function showPosition(position) {
+        latit = position.coords.latitude;
+        long = position.coords.longitude;
+        console.log(latit);
+        console.log(long);
+        btnCheck.disabled = false;
+        console.log('Pobrano');
+        getWeather();
+    };
+
+    btnCheck.on('click', getLocation);
+
+    var getWeather = function getWeather() {
+        var cityName = $("#cityName").val();
+        var urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + latit + "&lon=" + long + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
+        console.log(cityName);
+
+        if (cityName) {
+            console.log('IN');
+            urlWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
+
+            // textElem.value = '';
+        }
+        $.ajax({
+            url: urlWeather
+        }).done(function (response2) {
+            console.log(response2);
+            loadWeather(response2);
+        }).fail(function (error) {
+            console.log("Sorry");
+        });
+    };
+
+    var loadWeather = function loadWeather(response2) {
+        $("#description").html("" + response2.weather[0].description);
+    };
+
+    btnShow.on('click', getWeather);
+
+    getWeather();
 });
 
 /***/ })
