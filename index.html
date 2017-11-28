@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="vendor/font-awesome-4.7.0/css/font-awesome.min.css" >
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Weather Website</title>
+</head>
+<body>
+<!--HEADER-->
+<header>
+    <h1>Check the weather in your current location or in other cities!</h1>
+</header>
+
+<!--MAIN CONTENT-->
+<main>
+    <section class="container">
+        <div class ="col">
+            <div class="row">
+                <h2 id="showName"></h2>
+                <div class = "temp">
+                    <img src="" alt="weather">
+                    <span id="temperature"></span>
+                </div>
+                <p id="description"></p>
+                <p id="coordinates"></p>
+                <p id="wind"></p>
+                <p id="pressure"></p>
+                <p id="humidity"></p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div id="cityImage" class="row">
+                <!--<img src="" alt="city">-->
+
+            </div>
+
+        </div>
+    </section>
+
+    <section id="bottoms" class="container">
+        <div class="col">
+            <!--<div class=" col row">-->
+                <p id="info">Detect your location</p>
+                <button>Check</button>
+            </div>
+
+            <div id="enterCity" class="col row">
+                <input id="cityName" type="text" placeholder="Enter the city"/>
+                <input id="show" type="submit" value="Show">
+            </div>
+        <!--</div>-->
+    </section>
+</main>
+
+<!--FOOTER-->
+<footer class="container">
+    <div>
+        <span>2017</span>
+        <span><a href="https://github.com/Angelika-Plonka" class="fa fa-github fa-2x" aria-hidden="true" target="blank"></a></span>
+        <span> Angelika Płonka </span>
+    </div>
+</footer>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+<script src="js/out.js"></script>
+
+</body>
+</html>
