@@ -76,13 +76,17 @@ document.addEventListener('DOMContentLoaded', function () {
     var btnCheck = $("#check");
     var info = $("#info");
     var coordinates = $("#coordinates");
+    var weatherImg = $("img");
+    var humidity = $("#humidity");
+    var pressure = $("#pressure");
+    var wind = $("#wind");
 
     var latit = 50.25841;
     var long = 19.02754;
 
     var apiUrlCity = "https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=85f6fd69d859ba5ae84d901b8290ea31";
 
-    var apiUrlCoords = "https://api.openweathermap.org/data/2.5/weather?lat=" + latit + "&lon=" + long + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
+    // let apiUrlCoords = `https://api.openweathermap.org/data/2.5/weather?lat=${latit}&lon=${long}&APPID=85f6fd69d859ba5ae84d901b8290ea31`;
 
     //========IMAGE OF A CITY========
     var getCityImage = function getCityImage() {
@@ -138,24 +142,33 @@ document.addEventListener('DOMContentLoaded', function () {
         if (cityName) {
             console.log('IN');
             urlWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
-
-            // textElem.value = '';
+            console.log(urlWeather);
         }
         $.ajax({
             url: urlWeather
-        }).done(function (response2) {
-            console.log(response2);
-            loadWeather(response2);
+        }).done(function (data) {
+            console.log(data);
+            loadWeather(data);
         }).fail(function (error) {
-            console.log("Sorry");
+            console.log("Please enter only letters without Polish characters");
         });
     };
 
-    var loadWeather = function loadWeather(response2) {
-        $("#description").html("" + response2.weather[0].description);
+    var loadWeather = function loadWeather(data) {
+        $("#headerCity").html("" + data.name);
+        coordinates.html("(lat.: " + data.coord.lat.toFixed(2) + ", lon.:" + data.coord.lon.toFixed(2) + ")");
+
+        $("#description").html("" + data.weather[0].description);
+        var srcIcon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+        weatherImg.attr('src', "" + srcIcon);
+        $("#temperature").html((data.main.temp - 273).toFixed(0) + "&#8451");
+        humidity.html("Humidity: " + data.main.humidity + "%");
+        pressure.html("Pressure: " + data.main.pressure + "hPa");
+        wind.html("Wind: " + data.wind.speed + " km/h");
     };
 
     btnShow.on('click', getWeather);
+    btnCheck.on('click', getWeather);
 
     getWeather();
 });
