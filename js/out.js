@@ -83,6 +83,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var latit = 50.25841;
     var long = 19.02754;
+    // let cityName = $("#cityName").val("Katowice");
+    // let cityName = $("#headerCity").val();
+    // console.log(cityName);
+
 
     var apiUrlCity = "https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=85f6fd69d859ba5ae84d901b8290ea31";
 
@@ -90,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //========IMAGE OF A CITY========
     var getCityImage = function getCityImage() {
+
         var cityName = $("#cityName").val();
         var imageUrl = "https://pixabay.com/api/?key=7194261-cb5353e414e4d782b7a39e798&q=" + cityName + "&image_type=photo";
 
@@ -108,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     btnShow.on('click', getCityImage);
+    btnCheck.on('click', getCityImage);
 
     var getLocation = function getLocation() {
         var geo = navigator.geolocation;
@@ -137,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var getWeather = function getWeather() {
         var cityName = $("#cityName").val();
         var urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + latit + "&lon=" + long + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
-        console.log(cityName);
 
         if (cityName) {
             console.log('IN');
@@ -150,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(data);
             loadWeather(data);
         }).fail(function (error) {
-            console.log("Please enter only letters without Polish characters");
+            alert("Please enter only letters without Polish characters");
         });
     };
 
@@ -171,7 +176,37 @@ document.addEventListener('DOMContentLoaded', function () {
     btnCheck.on('click', getWeather);
 
     getWeather();
+    getCityImage();
 });
+
+// let getCityImage = () => {
+//
+//     let cityName = $("#cityName").val();
+//
+//     let imageUrl = "https://pixabay.com/api/?key=7194261-cb5353e414e4d782b7a39e798&q=Katowice&image_type=photo";
+//
+//     if (cityName) {
+//         console.log("bbbbbbbbbbbb");
+//         let imageUrl = `https://pixabay.com/api/?key=7194261-cb5353e414e4d782b7a39e798&q=${cityName}&image_type=photo`;
+//     }
+//
+//
+//     $.ajax({
+//         url: imageUrl
+//     }).done(function (response) {
+//         randomImage(response)
+//
+//     }).fail(function (error) {
+//         console.log("Sorry but we don't have your city in our database")
+//     })
+// }
+//
+// let randomImage = (response) => {
+//     $("#cityImage").html("<img src="+response.hits[Math.floor(Math.random() * response.hits.length) ].webformatURL+"/>");
+//     $("#cityName").val('');
+// }
+//
+// btnShow.on('click', getCityImage);
 
 /***/ })
 /******/ ]);
