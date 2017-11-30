@@ -70,109 +70,104 @@
 "use strict";
 
 
+// Default
 $(function () {
-
-    var btnShow = $("#show");
-    var btnCheck = $("#check");
-    var coordinates = $("#coordinates");
-    var weatherImg = $("img").first();
-    var cityImg = $("img").last();
-    var humidity = $("#humidity");
-    var pressure = $("#pressure");
-    var wind = $("#wind");
-
-    //========set Katowice as a default city========
+    //Default vars and default load
     var latit = 50.25841;
     var long = 19.02754;
-    var cityName = $("#cityName").val("Katowice");
-
-    var apiCity = "https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=85f6fd69d859ba5ae84d901b8290ea31";
-    var apiCoords = "https://api.openweathermap.org/data/2.5/weather?lat=" + latit + "&lon=" + long + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
-
-    //========IMAGE OF A CITY========
-    var getCityImage = function getCityImage() {
-
-        var cityName = $("#cityName").val();
-        var imageUrl = "https://pixabay.com/api/?key=7194261-cb5353e414e4d782b7a39e798&q=" + cityName + "&image_type=photo";
-
-        $.ajax({
-            url: imageUrl
-        }).done(function (response) {
-            randomImage(response);
-        }).fail(function (error) {
-            console.log("Sorry but we don't have your city in our database");
-        });
-    };
-
-    var randomImage = function randomImage(response) {
-        cityImg.attr('src', "" + response.hits[Math.floor(Math.random() * response.hits.length)].webformatURL);
-        $("#cityName").val('');
-    };
-
-    btnShow.on('click', getCityImage);
-    btnCheck.on('click', getCityImage);
-
-    //========GET THE CURRENT LOCATION========
-    var getLocation = function getLocation() {
-        var geo = navigator.geolocation;
-        var location = $("#location");
-        if (geo) {
-            location.html = "Please wait a moment";
-            btnCheck.disabled = true;
-            console.log('Pobieranie lokalizacji');
-            geo.getCurrentPosition(showPosition);
-        } else {
-            coordinates.html = "Geolocation isn't supported by your browser.";
-        }
-    };
-
-    var showPosition = function showPosition(position) {
-        latit = position.coords.latitude;
-        long = position.coords.longitude;
-        btnCheck.disabled = false;
-        console.log('Pobrano lokalizację');
-        getWeather();
-    };
-
-    btnCheck.on('click', getLocation);
-
-    //========LOAD WEATHER========
-    var getWeather = function getWeather() {
-        var cityName = $("#cityName").val();
-        var urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + latit + "&lon=" + long + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
-
-        if (cityName) {
-            urlWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
-        }
-        $.ajax({
-            url: urlWeather
-        }).done(function (data) {
-            console.log(data);
-            loadWeather(data);
-        }).fail(function (error) {
-            alert("Please enter only letters without Polish characters");
-        });
-    };
-
-    var loadWeather = function loadWeather(data) {
-        $("#headerCity").html("" + data.name);
-        coordinates.html("(lat: " + data.coord.lat.toFixed(2) + ", lon:" + data.coord.lon.toFixed(2) + ")");
-
-        $("#description").html("" + data.weather[0].description);
-        var srcIcon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-        weatherImg.attr('src', "" + srcIcon);
-        $("#temperature").html((data.main.temp - 273).toFixed(0) + "&#8451");
-        humidity.html("Humidity: " + data.main.humidity + "%");
-        pressure.html("Pressure: " + data.main.pressure + "hPa");
-        wind.html("Wind: " + data.wind.speed + " km/h");
-    };
-    btnShow.on('click', getWeather);
-    btnCheck.on('click', getWeather);
-
-    //========LAUNCHING========
-    getWeather();
-    getCityImage();
+    getWeatherDataAndFillView(latit, long, 'Katowice');
 });
+
+checkIfCityNameCorrect = function checkIfCityNameCorrect(cityName) {
+    return cityName !== undefined && cityName.length !== 0;
+};
+
+getWeatherDataAndFillView = function getWeatherDataAndFillView(latit, long, cityName) {
+    var urlWeather = "https://api.openweathermap.org/data/2.5/weather?lat=" + latit + "&lon=" + long + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
+
+    if (checkIfCityNameCorrect(cityName)) {
+        urlWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=85f6fd69d859ba5ae84d901b8290ea31";
+    }
+
+    $.ajax({
+        url: urlWeather
+    }).done(function (data) {
+        console.log(data);
+        displayWeatherData(data);
+        getCityImage(data.name);
+    }).fail(function (error) {
+        alert("Please enter only letters without Polish characters");
+    });
+};
+
+displayWeatherData = function displayWeatherData(data) {
+    $("#headerCity").html(data.name);
+    $("#temperature").html(countTemp(data.main.temp));
+    $("#description").html(data.weather[0].description);
+    $("#coordinates").html(generateCoordinatesHTML(data));
+    $("#humidity").html("Humidity: " + data.main.humidity + "%");
+    $("#pressure").html("Pressure: " + data.main.pressure + "hPa");
+    $("#wind").html("Wind: " + data.wind.speed + " km/h");
+    updateWeather(data);
+};
+
+countTemp = function countTemp(temp) {
+    var temper = (temp - 273).toFixed(0);
+    return temper + "&#8451";
+};
+
+generateCoordinatesHTML = function generateCoordinatesHTML(data) {
+    return "(lat: " + data.coord.lat.toFixed(2) + ", lon:" + data.coord.lon.toFixed(2) + ")";
+};
+
+updateWeather = function updateWeather(data) {
+    var srcIcon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+    $("#weatherImg").attr('src', srcIcon);
+};
+
+// Other functionalities
+getLocation = function getLocation() {
+    var geo = navigator.geolocation;
+    var location = $("#location");
+    if (geo !== undefined) {
+        location.html = "Please wait a moment";
+        console.log('Pobieranie lokalizacji');
+        geo.getCurrentPosition(showPosition);
+    } else {
+        $("#coordinates").html = "Geolocation isn't supported by your browser.";
+    }
+};
+
+getCityImage = function getCityImage(cityName) {
+    var imageUrl = "https://pixabay.com/api/?key=7194261-cb5353e414e4d782b7a39e798&q=" + cityName + "&image_type=photo";
+
+    $.ajax({
+        url: imageUrl
+    }).done(function (response) {
+        $("#cityImage").attr('src', "" + response.hits[Math.floor(Math.random() * response.hits.length)].webformatURL);
+    }).fail(function (error) {
+        console.log("Sorry but we don't have your city in our database");
+    });
+};
+
+getCityByName = function getCityByName() {
+    var cityName = $("#cityName").val();
+    getCityImage(cityName);
+    getLocation();
+};
+
+var showPosition = function showPosition(position) {
+    var cityName = $("#cityName").val();
+    var latit = position.coords.latitude;
+    var long = position.coords.longitude;
+    getWeatherDataAndFillView(latit, long, cityName);
+    console.log('Pobrano lokalizację');
+    $("#cityName").val('');
+};
+
+check = function check() {
+    getLocation();
+};
 
 /***/ })
 /******/ ]);

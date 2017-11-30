@@ -2,55 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Weather Website</title>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="vendor/font-awesome-4.7.0/css/font-awesome.min.css" >
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <title>Weather Website</title>
 </head>
 <body>
-<!--HEADER-->
-<header>
-    <h1>Check the weather in your current location or in other cities!</h1>
-</header>
 
-<!--MAIN CONTENT-->
-<main>
-    <section class="container">
-        <div class ="col">
-            <div class="row">
-                <h2 id="headerCity"></h2>
-                <p id="coordinates"></p>
-                <div id="temp">
-                    <img src="" alt="weather picture">
-                    <span id="temperature"></span>
-                </div>
-                <p id="description"></p>
-                <p id="wind"></p>
-                <p id="pressure"></p>
-                <p id="humidity"></p>
+<section class="container">
+    <div class ="col">
+        <div class="row">
+            <h2 id="headerCity"></h2>
+            <p id="coordinates"></p>
+            <div id="temp">
+                <img id="weatherImg" src="" alt="weather picture">
+                <span id="temperature"></span>
             </div>
+            <p id="description"></p>
+            <p id="wind"></p>
+            <p id="pressure"></p>
+            <p id="humidity"></p>
         </div>
+    </div>
 
-        <div class="col">
-            <div id="cityImage" class="row">
-                <img src="" alt="city photo">
-            </div>
-        </div>
-    </section>
+    <div class="col">
+        <img id="cityImage" src="" alt="city photo">
+    </div>
+</section>
 
-    <section id="bottoms" class="container">
-        <div class="col row">
-            <p id="location">Detect your location</p>
-            <button id="check">CHECK</button>
-        </div>
-        <div id="enterCity" class="col row">
-            <input id="cityName" type="text" placeholder="Enter the city"/>
-            <button id="show">SHOW</button>
-        </div>
-    </section>
-</main>
+<section id="bottoms" class="container">
+    <div class="col row">
+        <p id="location">Detect your location</p>
+        <button id="check" onclick="check()">CHECK</button>
+    </div>
+    <div id="enterCity" class="col row">
+        <input id="cityName" type="text" placeholder="Enter the city"/>
+        <button id="show" onclick="getCityByName()">SHOW</button>
+    </div>
+</section>
 
-<!--FOOTER-->
 <footer class="container">
     <div>
         <span>2017</span>
@@ -59,10 +50,8 @@
     </div>
 </footer>
 
-
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-<script src="js/out.js"></script>
-
+<script src="js/app.js"></script>
 </body>
 </html>
