@@ -4,6 +4,7 @@
     box-sizing: border-box;
     font-family: 'Open sans', sans-serif;
 }
+
 body{
     background: cornflowerblue url("../images/background.jpg") no-repeat top/cover;
     height: 100vh;
@@ -14,36 +15,99 @@ body{
     max-width: 1200px;
     margin: 0 auto;
 }
-.col{
-    height: 50%;
+
+.row{
     width: 100%;
-    padding: 5%;
     justify-content: center;
     align-items: flex-start;
+    padding-right: 2%;
+}
+
+.col{
     flex-direction: column;
 }
 
-.row{
-    background: rgba(255, 255, 255, 0.6);
-    /*border: 5px solid #AFEEEE;*/
-    /*border-radius: 15px;*/
+/*HEADER*/
+header{
+    height: 10%;
 }
 
-/*HEADER*/
-h1{
+header h1{
     color: white;
     font-size: 2rem;
     text-align: center;
-    margin-top: 2%;
+    text-shadow: 2px 2px 15px whitesmoke;
+    padding-top: 0.5%;
+    margin-bottom: 22%;
 }
 
 /*MAIN SECTION*/
+main{
+    height: 85%;
+    min-height: 500px;
+}
+
+#weatherCity{
+    background: rgba(255, 255, 255, 0.4);
+    border: 5px solid #204E60;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    padding: 2% 10%;
+    width: 30vw;
+}
+
+#temp{
+    display: flex;
+    flex-direction: row;
+}
+#temp #temperature{
+    font-size: 3rem;
+}
+
+#temp #weatherImg{
+    width: 100px;
+    height: 80px;
+    padding-right: 10%;
+}
+
+#cityImage{
+    height: 70vh;
+    /*width: 50vw;*/
+    border: 5px solid #204E60;
+}
+
+#cityImage img{
+    width: 100%;
+    height: 100%;
+}
+
 #bottoms{
-    width: 50vw;
-    height: 30vh;
+    width: 20vw;
+    height: 10%;
+    font-size: 25px;
+}
+
+#checkLocation, #enterCity{
+    background: rgba(255, 255, 255, 0.4);
+    border: 5px solid #204E60;
+    border-radius: 20px;
+}
+
+#bottoms button{
+    width: 50px;
+    height: 30px;
+    font-weight: bold;
+}
+#bottoms button:hover{
+    cursor: pointer;
 }
 
 /*FOOTER*/
+footer{
+    height: 5%;
+}
+
+
 footer div{
     width: 100%;
     text-align: center;
@@ -56,14 +120,4 @@ footer span{
 
 footer .fa-github{
     color: black;
-}
-
-#cityImage{
-    width: 50vw;
-    height: 60vh;
-}
-
-#cityImage img{
-    width: 100%;
-    height: 100%;
 }

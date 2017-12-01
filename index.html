@@ -9,40 +9,46 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<header>
+    <h1>Check the weather in your current location or in other cities!</h1>
+</header>
 
-<section class="container">
-    <div class ="col">
-        <div class="row">
-            <h2 id="headerCity"></h2>
-            <p id="coordinates"></p>
-            <div id="temp">
-                <img id="weatherImg" src="" alt="weather picture">
-                <span id="temperature"></span>
+<main>
+    <section class="container">
+        <div class ="row">
+            <div class="col">
+                <div id="weatherCity">
+                    <h2 id="headerCity"></h2>
+                    <p id="coordinates"></p>
+                    <div id="temp">
+                        <img id="weatherImg" src="" alt="weather picture">
+                        <span id="temperature"></span>
+                    </div>
+                    <p id="description"></p>
+                    <p id="wind"></p>
+                    <p id="pressure"></p>
+                    <p id="humidity"></p>
+                </div>
+                <div id="bottoms">
+                    <div id="checkLocation">
+                        <p id="location">Detect your location</p>
+                        <button id="check" onclick="check()">CHECK</button>
+                    </div>
+                    <div id="enterCity">
+                        <input id="cityName" type="text" placeholder="Enter the city"/>
+                        <button id="show" onclick="getCityByName()">SHOW</button>
+                    </div>
+                </div>
+
             </div>
-            <p id="description"></p>
-            <p id="wind"></p>
-            <p id="pressure"></p>
-            <p id="humidity"></p>
         </div>
-    </div>
+        <div class="row">
+            <img id="cityImage" src="" alt="city photo">
+        </div>
+    </section>
+</main>
 
-    <div class="col">
-        <img id="cityImage" src="" alt="city photo">
-    </div>
-</section>
-
-<section id="bottoms" class="container">
-    <div class="col row">
-        <p id="location">Detect your location</p>
-        <button id="check" onclick="check()">CHECK</button>
-    </div>
-    <div id="enterCity" class="col row">
-        <input id="cityName" type="text" placeholder="Enter the city"/>
-        <button id="show" onclick="getCityByName()">SHOW</button>
-    </div>
-</section>
-
-<footer class="container">
+<footer>
     <div>
         <span>2017</span>
         <span><a href="https://github.com/Angelika-Plonka" class="fa fa-github fa-2x" aria-hidden="true" target="blank"></a></span>
