@@ -25,7 +25,7 @@ getWeatherDataAndFillView = (latit,long,cityName) => {
         displayWeatherData(data);
         getCityImage(data.name);
     }).fail(function (error) {
-        alert("Please enter only letters without Polish characters");
+        alert("Please enter city name without Polish characters");
     });
 }
 

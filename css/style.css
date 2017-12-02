@@ -29,7 +29,7 @@ body{
 
 /*HEADER*/
 header{
-    height: 10%;
+    height: 14%;
 }
 
 header h1{
@@ -38,12 +38,11 @@ header h1{
     text-align: center;
     text-shadow: 2px 2px 15px whitesmoke;
     padding-top: 0.5%;
-    margin-bottom: 22%;
 }
 
 /*MAIN SECTION*/
 main{
-    height: 85%;
+    height: 81%;
     min-height: 500px;
 }
 
@@ -52,27 +51,35 @@ main{
     border: 5px solid #204E60;
     border-radius: 20px;
     font-size: 1.5rem;
-    padding: 2% 10%;
-    width: 30vw;
+    padding: 3% 7%;
+    width: 25vw;
+    margin: 0 0 2vh 5vw;
 }
 
-#temp{
+#weatherCity #coordinates{
+    font-size: 1rem;
+    text-align: center;
+}
+
+#weatherCity #headerCity{
+    text-align: center;
+}
+
+#weatherCity #temp{
     display: flex;
     flex-direction: row;
 }
-#temp #temperature{
+#weatherCity #temperature{
     font-size: 3rem;
 }
 
-#temp #weatherImg{
+#weatherCity #weatherImg{
     width: 100px;
     height: 80px;
-    padding-right: 10%;
 }
 
 #cityImage{
     height: 70vh;
-    /*width: 50vw;*/
     border: 5px solid #204E60;
 }
 
@@ -82,24 +89,36 @@ main{
 }
 
 #bottoms{
-    width: 20vw;
-    height: 10%;
+    width: 36vw;
+    height: 15vh;
     font-size: 25px;
+    font-weight: bold;
 }
 
 #checkLocation, #enterCity{
-    background: rgba(255, 255, 255, 0.4);
-    border: 5px solid #204E60;
+    background: rgba(0,255,0,0.3);
+    border: 3px solid #216360;
     border-radius: 20px;
+    padding: 2%;
+    margin: 5%;
 }
 
 #bottoms button{
-    width: 50px;
-    height: 30px;
+    width: 9vw;
+    height: 6vh;
     font-weight: bold;
+    font-size: 1.5rem;
+    background: #216360;
+    border-radius: 15px;
 }
+
 #bottoms button:hover{
     cursor: pointer;
+    background: #339991;
+}
+
+#enterCity #cityName{
+    font-size: 20px;
 }
 
 /*FOOTER*/
