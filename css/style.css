@@ -80,6 +80,7 @@ main{
 
 #cityImage{
     height: 70vh;
+    max-width: 45vw;
     border: 5px solid #204E60;
 }
 
